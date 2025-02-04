@@ -17,30 +17,15 @@ export const authConfig: NextAuthConfig = {
     })
   ],
   secret: process.env.NEXTAUTH_SECRET,
-  callbacks: {
-    async jwt({ token, account, profile }) {
-      if (account) {
-        token.accessToken = account.access_token
-      }
-      return token
-    },
-    async session({ session, token }) {
-      return session
-    },
-    async redirect({ url, baseUrl }) {
-      // Handle redirect after sign in
-      if (url.startsWith('/')) {
-        return `${baseUrl}${url}`
-      } else if (url.startsWith(baseUrl)) {
-        return url
-      }
-      return baseUrl + '/dashboard'
-    }
-  },
   pages: {
     signIn: '/',
     error: '/',
     newUser: '/dashboard'
+  },
+  callbacks: {
+    async redirect({ url, baseUrl }) {
+      return url.startsWith(baseUrl) ? url : baseUrl + '/dashboard'
+    }
   }
 }
 

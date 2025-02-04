@@ -1,5 +1,5 @@
 import './globals.css'
-import { AuthProvider } from '@/components/providers/session-provider'
+import { AuthProvider } from "@/components/providers/session-provider"
 
 export default function RootLayout({
   children,

@@ -1,31 +1,27 @@
-'use client';
+'use client'
 
-import { Button } from '@/components/ui/button';
-import { useSession, signIn } from 'next-auth/react';
-import { useRouter } from 'next/navigation';
-import { useState } from 'react';
+import { Button } from '@/components/ui/button'
+import { signIn } from 'next-auth/react'
+import { useState } from 'react'
 
 export default function Home() {
-  const { data: session, status } = useSession();
-  const router = useRouter();
-  const [isLoading, setIsLoading] = useState(false);
-  const [error, setError] = useState<string | null>(null);
+  const [isLoading, setIsLoading] = useState(false)
+  const [error, setError] = useState<string | null>(null)
 
   const handleLogin = async () => {
     try {
-      setIsLoading(true);
-      setError(null);
-      
+      setIsLoading(true)
+      setError(null)
       await signIn('google', {
         callbackUrl: '/dashboard'
-      });
+      })
     } catch (error) {
-      console.error('Sign in error:', error);
-      setError('An error occurred during sign in');
+      console.error('Sign in error:', error)
+      setError('An error occurred during sign in')
     } finally {
-      setIsLoading(false);
+      setIsLoading(false)
     }
-  };
+  }
 
   return (
     <main className="min-h-screen flex flex-col items-center justify-center bg-[#0F1218] px-4">
@@ -42,7 +38,7 @@ export default function Home() {
             Welcome to <span className="text-amber-400">Predictions</span>
           </h1>
           <p className="text-gray-400">
-            Make your predictions for upcoming matches
+            Sign in to make your predictions
           </p>
         </div>
 
@@ -52,22 +48,14 @@ export default function Home() {
           </div>
         )}
 
-        <div className="space-y-4">
-          <Button
-            onClick={() => router.push('/predictions')}
-            className="w-full bg-amber-400 hover:bg-amber-500 text-[#1A1F2A] font-semibold py-3 rounded-lg border border-amber-400/20"
-          >
-            Make Predictions
-          </Button>
-
-          <Button
-            onClick={() => router.push('/leaderboard')}
-            className="w-full bg-transparent hover:bg-amber-400/10 text-amber-400 font-semibold py-3 rounded-lg border border-amber-400"
-          >
-            View Leaderboard
-          </Button>
-        </div>
+        <Button
+          onClick={handleLogin}
+          disabled={isLoading}
+          className="w-full bg-amber-400 hover:bg-amber-500 text-[#1A1F2A] font-semibold py-3 rounded-lg border border-amber-400/20"
+        >
+          {isLoading ? 'Signing in...' : 'Sign in with Google'}
+        </Button>
       </div>
     </main>
-  );
+  )
 }
