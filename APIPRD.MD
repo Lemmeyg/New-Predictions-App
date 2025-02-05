@@ -85,8 +85,8 @@ Example of previous implementation of this API: C:\Users\Gordo\Documents\GitHub\
     ]
     ```
 
-### 1.2.2 Store the Fixtures in the Airtable Table
-The process for storing fixtures in Airtable follows these steps:
+### 1.2.2 Store the Fixtures in the googelsheets Table
+The process for storing fixtures in googelsheets follows these steps:
 
 1.2.2.1. Clear existing data:
  - Delete records in googlesheets sheet “fixtures”\
