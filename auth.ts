@@ -1,6 +1,16 @@
 import NextAuth from "next-auth"
 import GoogleProvider from "next-auth/providers/google"
 import { NextAuthConfig } from "next-auth"
+import { JWT } from "next-auth/jwt"
+import { Session } from "next-auth"
+
+interface ExtendedToken extends JWT {
+  accessToken?: string
+}
+
+interface ExtendedSession extends Session {
+  accessToken?: string
+}
 
 export const authConfig: NextAuthConfig = {
   providers: [
@@ -32,9 +42,9 @@ export const authConfig: NextAuthConfig = {
       if (account) {
         token.accessToken = account.access_token
       }
-      return token
+      return token as ExtendedToken
     },
-    async session({ session, token }) {
+    async session({ session, token }: { session: ExtendedSession; token: ExtendedToken }) {
       // Send access_token to client
       session.accessToken = token.accessToken
       return session
