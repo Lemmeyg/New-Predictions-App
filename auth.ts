@@ -11,7 +11,8 @@ export const authConfig: NextAuthConfig = {
         params: {
           prompt: "consent",
           access_type: "offline",
-          response_type: "code"
+          response_type: "code",
+          scope: 'https://www.googleapis.com/auth/userinfo.email https://www.googleapis.com/auth/userinfo.profile https://www.googleapis.com/auth/spreadsheets.readonly'
         }
       }
     })
@@ -25,6 +26,18 @@ export const authConfig: NextAuthConfig = {
   callbacks: {
     async redirect({ url, baseUrl }) {
       return url.startsWith(baseUrl) ? url : baseUrl + '/dashboard'
+    },
+    async jwt({ token, account }) {
+      // Persist the access_token to the token right after signin
+      if (account) {
+        token.accessToken = account.access_token
+      }
+      return token
+    },
+    async session({ session, token }) {
+      // Send access_token to client
+      session.accessToken = token.accessToken
+      return session
     }
   }
 }
