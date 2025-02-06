@@ -61,7 +61,13 @@ export function PredictionForm() {
     setIsSubmitting(true)
 
     try {
-      // Format predictions for submission
+      // Log submission attempt
+      console.log('Attempting to submit predictions:', {
+        fixtureCount: fixtures.length,
+        samplePrediction: predictions[Object.keys(predictions)[0]],
+        userEmail: session?.user?.email
+      })
+
       const submissionData = fixtures.map(fixture => ({
         userName: session?.user?.email,
         fixtureId: fixture.fixtureId,
@@ -73,13 +79,29 @@ export function PredictionForm() {
         date: fixture.date
       }))
 
+      console.log('Sending prediction data:', {
+        count: submissionData.length,
+        sample: submissionData[0]
+      })
+
       const response = await fetch('/api/predictions', {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify(submissionData)
       })
 
-      if (!response.ok) throw new Error('Failed to submit predictions')
+      if (!response.ok) {
+        const errorData = await response.json()
+        console.error('Submission response error:', {
+          status: response.status,
+          statusText: response.statusText,
+          errorData
+        })
+        throw new Error(`Failed to submit: ${response.statusText}`)
+      }
+
+      const result = await response.json()
+      console.log('Submission successful:', result)
 
       // Show toast with predictions for screenshot
       const predictionSummary = fixtures.map(fixture => 
@@ -114,7 +136,11 @@ export function PredictionForm() {
   if (error) return <div className="text-red-500">{error}</div>
 
   return (
-    <form onSubmit={handleSubmit} className="space-y-8">
+    <form 
+      onSubmit={handleSubmit} 
+      className="space-y-8"
+      onClick={(e) => console.log('Form clicked:', e.currentTarget)}
+    >
       {fixtures.map((fixture) => (
         <div key={fixture.fixtureId} className="flex items-center justify-between space-x-4 p-4 border rounded-lg">
           <span className="text-right w-1/3">{fixture.homeTeam}</span>

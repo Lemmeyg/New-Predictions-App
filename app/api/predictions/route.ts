@@ -24,19 +24,43 @@ interface PredictionData {
 }
 
 export async function POST(request: Request) {
+  console.log('Predictions POST request received')
+  
   try {
     const session = await auth()
+    console.log('Session in predictions API:', {
+      hasSession: !!session,
+      userEmail: session?.user?.email,
+      hasAccessToken: !!session?.accessToken
+    })
     
     if (!session?.accessToken) {
       return NextResponse.json({ error: 'Not authenticated' }, { status: 401 })
     }
 
+    // Add scope verification
+    const oauth2Client = new google.auth.OAuth2()
+    oauth2Client.setCredentials({ access_token: session.accessToken })
+    
+    // Get token info to check scopes
+    const tokenInfo = await oauth2Client.getTokenInfo(session.accessToken)
+    console.log('Predictions Token Info:', {
+      email: tokenInfo.email,
+      scopes: tokenInfo.scopes,
+      expiry: tokenInfo.expiry_date,
+      audience: tokenInfo.aud,
+      accessType: tokenInfo.access_type
+    })
+
     const predictions = await request.json() as PredictionData[]
+    console.log('Received predictions data:', {
+      count: predictions.length,
+      sample: predictions[0]
+    })
+
     const spreadsheetId = process.env.GOOGLE_SHEETS_ID
 
     const sheets = google.sheets({ version: 'v4' })
-    const oauth2Client = new google.auth.OAuth2()
-    oauth2Client.setCredentials({ access_token: session.accessToken })
 
     // First, let's get the sheet names to verify
     const spreadsheet = await sheets.spreadsheets.get({

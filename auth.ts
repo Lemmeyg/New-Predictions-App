@@ -43,8 +43,14 @@ export const authConfig: NextAuthConfig = {
       return url.startsWith(baseUrl) ? url : baseUrl + '/dashboard'
     },
     async jwt({ token, account }) {
-      // Persist the access_token to the token right after signin
+      // Log the account info when we get it
       if (account) {
+        console.log('OAuth Account Info:', {
+          scopes: account.scope?.split(' '),
+          accessToken: account.access_token ? 'present' : 'missing',
+          tokenType: account.token_type,
+          provider: account.provider
+        })
         token.accessToken = account.access_token
       }
       return token as ExtendedToken
