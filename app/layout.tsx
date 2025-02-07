@@ -1,7 +1,7 @@
 import './globals.css'
 import { AuthProvider } from "@/components/providers/session-provider"
 import { Toaster } from '@/components/ui/toaster'
-import { CSSReloader } from '@/components/css-reloader'
+import { CSSReloader } from "@/components/ui/css-reloader"
 
 export default function RootLayout({
   children,
