@@ -33,14 +33,16 @@ export default function DashboardPage() {
         <div className="space-y-4">
           <Button
             onClick={() => router.push('/predictions')}
-            className="w-full bg-gradient-to-b from-[#FFB800] to-[#FFB800]/90 hover:from-[#FFB800]/90 hover:to-[#FFB800]/70 text-[#1A1F2A] font-semibold py-3 rounded-lg shadow-lg transition-all duration-200"
+            variant="gradient"
+            className="w-full font-semibold py-3"
           >
             Make Predictions
           </Button>
 
           <Button
             onClick={() => router.push('/leaderboard')}
-            className="w-full bg-gradient-to-b from-[#FFB800] to-[#FFB800]/90 hover:from-[#FFB800]/90 hover:to-[#FFB800]/70 text-[#1A1F2A] font-semibold py-3 rounded-lg shadow-lg transition-all duration-200"
+            variant="gradient"
+            className="w-full font-semibold py-3"
           >
             View Leaderboard
           </Button>
@@ -48,7 +50,8 @@ export default function DashboardPage() {
           <div className="pt-6">
             <form action={handleSignOut}>
               <Button 
-                className="w-full bg-gradient-to-b from-[#FFB800] to-[#FFB800]/90 hover:from-[#FFB800]/90 hover:to-[#FFB800]/70 text-[#1A1F2A] font-semibold py-3 rounded-lg shadow-lg transition-all duration-200"
+                variant="gradient"
+                className="w-full font-semibold py-3"
               >
                 Sign Out
               </Button>
