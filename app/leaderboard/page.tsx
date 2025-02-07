@@ -57,7 +57,7 @@ export default function LeaderboardPage() {
     return (
       <div className="flex min-h-screen flex-col items-center justify-center p-4">
         <div className="text-red-500 mb-4">{error}</div>
-        <Button onClick={() => router.push('/dashboard')}>
+        <Button onClick={() => router.push('/dashboard')} className="bg-primary text-background hover:bg-primary/90">
           Back to Dashboard
         </Button>
       </div>
@@ -66,31 +66,32 @@ export default function LeaderboardPage() {
 
   return (
     <div className="flex min-h-screen flex-col p-4 md:p-8">
-      <div className="flex justify-between items-center mb-6">
+      <div className="flex flex-col items-center mb-8">
         <Button 
-          variant="outline" 
           onClick={() => router.push('/dashboard')}
-          className="mb-4"
+          className="self-start mb-6 bg-primary text-background hover:bg-primary/90"
         >
           Back
         </Button>
-        <h1 className="text-2xl font-bold">Leaderboard</h1>
+        <h1 className="text-4xl font-bold mb-2">
+          <span className="text-primary">2024/25</span> Predictions Leaderboard
+        </h1>
       </div>
 
-      <div className="rounded-md border">
+      <div className="panel">
         <Table>
           <TableHeader>
             <TableRow>
-              <TableHead className="w-16">Rank</TableHead>
-              <TableHead>Player</TableHead>
-              <TableHead className="text-right">GW Points</TableHead>
-              <TableHead className="text-right">Total</TableHead>
+              <TableHead className="w-16 text-primary font-bold">Rank</TableHead>
+              <TableHead className="text-primary font-bold">Player</TableHead>
+              <TableHead className="text-right text-primary font-bold">GW Points</TableHead>
+              <TableHead className="text-right text-primary font-bold">Total</TableHead>
             </TableRow>
           </TableHeader>
           <TableBody>
             {data?.map((entry) => (
               <TableRow key={entry.rank}>
-                <TableCell>{entry.rank}</TableCell>
+                <TableCell className="text-primary font-bold">{entry.rank}</TableCell>
                 <TableCell>{entry.playerName}</TableCell>
                 <TableCell className="text-right">{entry.gameWeekPoints}</TableCell>
                 <TableCell className="text-right">{entry.totalPoints}</TableCell>

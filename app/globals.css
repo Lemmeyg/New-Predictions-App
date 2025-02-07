@@ -2,21 +2,39 @@
 @tailwind components;
 @tailwind utilities;
 
-:root {
-  --background: #0A0C0F;
-  --foreground: #FFFFFF;
-  --primary: #FFB800;
+@layer base {
+  :root {
+    --background: 220 17% 5%;
+    --foreground: 0 0% 100%;
+    --primary: 40 100% 50%;
+    --radius: 0.5rem;
+  }
+
+  * {
+    @apply border-border;
+  }
+  
+  body {
+    @apply bg-background text-foreground;
+    min-height: 100vh;
+  }
 }
 
-* {
-  margin: 0;
-  padding: 0;
-  box-sizing: border-box;
-}
+@layer components {
+  .input-focus {
+    @apply focus:ring-2 focus:ring-primary focus:border-primary transition-colors duration-200;
+  }
+  
+  .gradient-button {
+    @apply bg-gradient-to-b from-primary to-primary/90 
+           hover:from-primary/90 hover:to-primary/70 
+           text-background font-semibold 
+           shadow-lg transition-all duration-200
+           rounded-md px-4 py-2;
+  }
 
-body {
-  background-color: var(--background);
-  color: var(--foreground);
-  min-height: 100vh;
+  .panel {
+    @apply bg-panel rounded-lg shadow-lg p-4;
+  }
 }
 

@@ -1,6 +1,16 @@
 import './globals.css'
+import { Inter } from 'next/font/google'
 import { AuthProvider } from "@/components/providers/session-provider"
 import { Toaster } from '@/components/ui/toaster'
+
+const inter = Inter({ 
+  subsets: ['latin']
+})
+
+export const metadata = {
+  title: 'Predictions App',
+  description: 'Make your predictions for upcoming matches',
+}
 
 export default function RootLayout({
   children,
@@ -8,9 +18,11 @@ export default function RootLayout({
   children: React.ReactNode
 }) {
   return (
-    <html lang="en">
-      <body className="bg-[#0A0C0F] text-white">
-        <AuthProvider>{children}</AuthProvider>
+    <html lang="en" className={inter.className}>
+      <body className="min-h-screen bg-[#0A0C0F] text-white">
+        <AuthProvider>
+          {children}
+        </AuthProvider>
         <Toaster />
       </body>
     </html>
