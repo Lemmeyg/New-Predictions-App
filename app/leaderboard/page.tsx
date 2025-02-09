@@ -31,7 +31,8 @@ export default function LeaderboardPage() {
           rank: row[0],
           playerName: row[1],
           gameWeekPoints: row[2],
-          totalPoints: row[3]
+          totalPoints: row[3],
+          form: row[4]
         }))
         
         setData(formattedData)
@@ -86,6 +87,7 @@ export default function LeaderboardPage() {
               <TableHead className="text-primary font-bold">Player</TableHead>
               <TableHead className="text-right text-primary font-bold">GW Points</TableHead>
               <TableHead className="text-right text-primary font-bold">Total</TableHead>
+              <TableHead className="text-right text-primary font-bold">4W Form</TableHead>
             </TableRow>
           </TableHeader>
           <TableBody>
@@ -95,6 +97,7 @@ export default function LeaderboardPage() {
                 <TableCell>{entry.playerName}</TableCell>
                 <TableCell className="text-right">{entry.gameWeekPoints}</TableCell>
                 <TableCell className="text-right">{entry.totalPoints}</TableCell>
+                <TableCell className="text-right">{entry.form}</TableCell>
               </TableRow>
             ))}
           </TableBody>

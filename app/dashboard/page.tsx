@@ -6,7 +6,7 @@ import { redirect, useRouter } from 'next/navigation'
 import { handleSignOut } from '@/app/actions/auth'
 import { TestFixturesButton } from "@/components/test-fixtures-button"
 
-const ADMIN_EMAIL = 'gordonlemmey@googlemail.com'
+const ADMIN_EMAILS = ['gordonlemmey@googlemail.com', 'gordonlemmey@gmail.com']
 
 export default function DashboardPage() {
   const { data: session, status } = useSession({
@@ -21,7 +21,7 @@ export default function DashboardPage() {
     return <div>Loading...</div>
   }
 
-  const isAdmin = session?.user?.email === ADMIN_EMAIL
+  const isAdmin = session?.user?.email && ADMIN_EMAILS.includes(session.user.email)
 
   return (
     <div className="flex min-h-screen flex-col items-center justify-center p-24 bg-[#0A0C0F]">
@@ -30,7 +30,7 @@ export default function DashboardPage() {
           <h1 className="text-3xl font-bold text-white">
             <span className="text-[#FFB800]">Predictions</span>
           </h1>
-          <p className="text-gray-400 text-sm truncate px-2">
+          <p className="text-gray-400 text-sm truncate max-w-full break-words">
             Welcome, {session?.user?.email}
           </p>
         </div>

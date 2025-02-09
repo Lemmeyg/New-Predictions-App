@@ -3,6 +3,7 @@ export interface LeaderboardEntry {
   playerName: string;
   gameWeekPoints: string;
   totalPoints: string;
+  form: string;
 }
 
 export type LeaderboardData = LeaderboardEntry[]; 
