@@ -4,7 +4,7 @@ import { Button } from '@/components/ui/button'
 import { useSession } from 'next-auth/react'
 import { redirect, useRouter } from 'next/navigation'
 import { handleSignOut } from '@/app/actions/auth'
-import TestFixturesButton from "@/components/test-fixtures-button"
+import { TestFixturesButton } from "@/components/test-fixtures-button"
 
 const ADMIN_EMAIL = 'gordonlemmey@googlemail.com'
 
