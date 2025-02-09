@@ -12,7 +12,11 @@ export const GOOGLE_CONFIG = {
   CLIENT_ID: "830158656014-ac04mquj2eikjeof65g6940ko6s51ph1.apps.googleusercontent.com",
   API_KEY: 'AIzaSyDrhkwTeR-VmnwfMfnO0LVlB_nwEfddTgI',
   DISCOVERY_DOC: 'https://sheets.googleapis.com/$discovery/rest?version=v4',
-  SCOPES: 'https://www.googleapis.com/auth/spreadsheets',
+  SCOPES: [
+    'https://www.googleapis.com/auth/spreadsheets.readonly',
+    'https://www.googleapis.com/auth/userinfo.email',
+    'https://www.googleapis.com/auth/userinfo.profile'
+  ].join(' '),
 };
 
 // Helper to load Google API scripts
