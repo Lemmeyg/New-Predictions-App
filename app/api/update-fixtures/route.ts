@@ -3,6 +3,12 @@ import { fetchPremierLeagueFixtures } from '@/lib/football-api';
 import { updateFixturesSheet } from '@/lib/sheets-fixtures';
 import { NextResponse } from 'next/server';
 
+// Route Segment Config
+export const runtime = 'nodejs';
+export const dynamic = 'force-dynamic';
+export const maxDuration = 300; // 5 minutes timeout
+export const revalidate = 0;
+
 export async function POST() {
   try {
     const session = await auth();
@@ -36,16 +42,4 @@ export async function POST() {
       { status: 500 }
     );
   }
-}
-
-// Add CRON configuration for 5pm EST daily
-export const dynamic = 'force-dynamic';
-export const maxDuration = 300; // 5 minutes timeout
-export const revalidate = 0;
-
-// Vercel Cron configuration
-export const config = {
-  api: {
-    bodyParser: false,
-  },
-}; 
+} 
