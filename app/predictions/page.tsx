@@ -2,23 +2,34 @@
 
 import { PredictionForm } from '@/components/predictions/prediction-form'
 import { useSession } from 'next-auth/react'
+import { redirect } from 'next/navigation'
 
 export default function PredictionsPage() {
-  const { data: session } = useSession()
+  const { data: session, status } = useSession({
+    required: true,
+    onUnauthenticated() {
+      redirect('/')
+    },
+  })
+
+  if (status === 'loading') {
+    return <div>Loading...</div>
+  }
 
   return (
-    <div className="container mx-auto p-4">
-      <div className="flex justify-between items-center mb-8">
-        <div className="w-full text-center">
-          <h1 className="text-4xl font-bold">
-            <span className="text-primary">Gameweek</span> Predictions
+    <div className="min-h-screen bg-[#0A0C0F] p-4">
+      <div className="max-w-2xl mx-auto space-y-6">
+        <div className="text-center space-y-2">
+          <h1 className="text-3xl font-bold">
+            <span className="text-[#FFB800]">Gameweek</span>{' '}
+            <span className="text-white">Predictions</span>
           </h1>
+          <p className="text-white text-sm">
+            {session?.user?.email}
+          </p>
         </div>
-        <div className="absolute right-4 top-4 text-sm text-foreground/80">
-          {session?.user?.email}
-        </div>
+        <PredictionForm />
       </div>
-      <PredictionForm />
     </div>
   )
 } 

@@ -4,6 +4,9 @@ import { Button } from '@/components/ui/button'
 import { useSession } from 'next-auth/react'
 import { redirect, useRouter } from 'next/navigation'
 import { handleSignOut } from '@/app/actions/auth'
+import { TestFixturesButton } from "@/components/test-fixtures-button"
+
+const ADMIN_EMAIL = 'gordonlemmey@googlemail.com'
 
 export default function DashboardPage() {
   const { data: session, status } = useSession({
@@ -17,6 +20,8 @@ export default function DashboardPage() {
   if (status === 'loading') {
     return <div>Loading...</div>
   }
+
+  const isAdmin = session?.user?.email === ADMIN_EMAIL
 
   return (
     <div className="flex min-h-screen flex-col items-center justify-center p-24 bg-[#0A0C0F]">
@@ -57,6 +62,13 @@ export default function DashboardPage() {
               </Button>
             </form>
           </div>
+
+          {isAdmin && (
+            <div className="p-4 border border-[#FFB800] rounded-lg bg-[#1E2330]">
+              <h2 className="text-xl font-semibold mb-2 text-[#FFB800]">Admin Controls</h2>
+              <TestFixturesButton />
+            </div>
+          )}
         </div>
       </div>
     </div>
