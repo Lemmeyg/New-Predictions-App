@@ -56,6 +56,8 @@ https://blog.logrocket.com/how-to-authenticate-access-google-apis-using-oauth-2-
 ##1.2 APIs
 ### 1.2.1 football API
 
+### Documentation:https://www.api-football.com/documentation-v3
+
 Run the API call at 5pm EST everyday
 Pull in all the fixtures from League 39 and season 2024
 
