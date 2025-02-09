@@ -30,7 +30,7 @@ export default function DashboardPage() {
           <h1 className="text-3xl font-bold text-white">
             <span className="text-[#FFB800]">Predictions</span>
           </h1>
-          <p className="text-gray-400">
+          <p className="text-gray-400 text-sm truncate max-w-full break-words">
             Welcome, {session?.user?.email}
           </p>
         </div>
