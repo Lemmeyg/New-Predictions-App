@@ -11,7 +11,7 @@ export async function getLeaderboardData(accessToken: string) {
       spreadsheetId,
       hasAccessToken: !!accessToken,
       tokenLength: accessToken?.length,
-      range: 'Table!A1:D7'
+      range: 'Table!A1:E7'
     })
 
     const sheets = google.sheets({ version: 'v4' })
@@ -21,7 +21,7 @@ export async function getLeaderboardData(accessToken: string) {
     const response = await sheets.spreadsheets.values.get({
       auth,
       spreadsheetId,
-      range: 'Table!A1:D7',
+      range: 'Table!A1:E7',
     })
 
     console.log('Google Sheets API response:', {
