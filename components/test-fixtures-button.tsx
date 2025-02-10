@@ -3,6 +3,7 @@
 import { useState } from 'react';
 import { Button } from '@/components/ui/button';
 import { useToast } from '@/components/ui/use-toast';
+import { track } from '@vercel/analytics';
 
 export function TestFixturesButton() {
   const [isLoading, setIsLoading] = useState(false);
@@ -10,6 +11,8 @@ export function TestFixturesButton() {
 
   const updateFixtures = async () => {
     setIsLoading(true);
+    track('fixtures_update_started');
+    
     try {
       const response = await fetch('/api/test-fixtures?update=true');
       const data = await response.json();
@@ -17,6 +20,11 @@ export function TestFixturesButton() {
       if (!response.ok) {
         throw new Error(data.error || 'Failed to update fixtures');
       }
+
+      track('fixtures_update_success', {
+        totalFixtures: data.summary.totalFixtures,
+        fixturesByRound: Object.keys(data.summary.fixturesByRound || {}).length
+      });
 
       toast({
         title: 'Fixtures Update Successful',
@@ -34,6 +42,10 @@ export function TestFixturesButton() {
 
       console.log('Update Results:', data);
     } catch (error) {
+      track('fixtures_update_error', {
+        error: error instanceof Error ? error.message : 'Unknown error'
+      });
+      
       console.error('Update error:', error);
       toast({
         title: 'Error',
@@ -52,7 +64,7 @@ export function TestFixturesButton() {
       variant="gradient"
       className="w-full font-semibold py-3"
     >
-      {isLoading ? 'Updating Fixtures...' : 'Update Football Fixtures'}
+      {isLoading ? 'Updating Fixtures...' : 'Update Fixtures'}
     </Button>
   );
 } 
